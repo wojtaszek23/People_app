@@ -20,7 +20,7 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
-    void setComboBoxText(QString text);
+    //void setComboBoxText(QString text);
     void saveFile(QString);
     void addItemToCombo(QString);
 

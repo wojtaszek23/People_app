@@ -41,14 +41,17 @@ Dialog::~Dialog()
     delete ui;
 }
 
+/*
 void Dialog::setComboBoxText(QString text)
 {
     on_comboBox_currentTextChanged(text);
     on_buttonBox_accepted();
 }
+*/
 
 void Dialog::saveFile(QString filename)
 {
+    //MOVE TO MANAGER as saveFile
     QString tmp_header = header_labels.join(';');
     tmp_header.remove(' ');
     XmlWriter::get()->writeModel(filename, model, tmp_header);
@@ -64,6 +67,8 @@ void Dialog::addItemToCombo(QString txt)
 
 void Dialog::on_comboBox_currentTextChanged(const QString &arg1)
 {
+    //bool fileNameEmpty = currentTextText->text();
+    //MOVE TO MANAGER as changeFileName
     if(file_arleady_created == true)
     {
         file_arleady_created = false;
@@ -74,6 +79,7 @@ void Dialog::on_comboBox_currentTextChanged(const QString &arg1)
         "Postal Code" << "Phone Number" << "Day Of Birth" << "Age");
     model->setHorizontalHeaderLabels(header_labels);
 
+
     if(arg1 == "")
     {
         model->setHorizontalHeaderLabels(header_labels);
@@ -81,6 +87,7 @@ void Dialog::on_comboBox_currentTextChanged(const QString &arg1)
         return;
     }
 
+    //MOVE TO MANAGER as loadFile
     Delegate::modified = false; // ? czy tutaj ???
     QString file_name = arg1;
     QStandardItemModel *tmp_model;
@@ -117,6 +124,7 @@ void Dialog::on_pushButton_clicked()
         ui->lineEdit_3->text() << ui->lineEdit_4->text() << ui->lineEdit_5->text() <<
         ui->lineEdit_6->text() << ui->lineEdit_7->text() << ui->lineEdit_8->text() << "0" );
 
+    //MOVE TO MANAGER as addRecord
     bool flag = false;
 
     for(int i = 0; i < str_row.size() - 1; i++)
@@ -150,6 +158,7 @@ void Dialog::on_pushButton_clicked()
         model->setData(index, str_row.at(col));
     }
 
+    //MOVE TO DELEGATE as clearAdderFields
     ui->lineEdit->setText("");
     ui->lineEdit_2->setText("");
     ui->lineEdit_3->setText("");
@@ -165,14 +174,29 @@ void Dialog::on_pushButton_clicked()
 
 void Dialog::on_pushButton_2_clicked()
 {
-    if(model->rowCount() == 0)
-    {
-        return;
-    }
     QModelIndexList selection = ui->tableView->selectionModel()->selectedRows();
-    //qDebug() << "sel count" << selection.count();
+    bool result = Manager::deleteRecordsOrder(selection);
+    if(result == false)
+    {
+        QMessageBox::information(this, "Delete Records Information", "Operation canceled. No row has been selected");
+    }
+
+    //MOVE TO MANAGER as DeleteRecordsOrder(*(ui->tableView)) SEND TO DELEGATE???
+    if(selection.size() == 0)
+    {
+        return false;
+    }
+    else
+    {
+        return deleteRecords(selection);
+    }
+
+
+
+
     if(selection.count() != 0)
     {
+        //MOVE TO MANAGER/DELEGATE as DeleteRecords
         QModelIndex index = selection.at(0);
         model->removeRows(index.row(),selection.count(), QModelIndex());
         Delegate::modified = true;
@@ -181,6 +205,7 @@ void Dialog::on_pushButton_2_clicked()
 
 void Dialog::on_buttonBox_accepted()
 {
+    //MOVE TO MANAGER as saveFileOrder
     qDebug() << "on_but_acc";
     if(model->rowCount() == 0)
     {
@@ -193,6 +218,7 @@ void Dialog::on_buttonBox_accepted()
         return;
     }
 
+    //MOVE TO MANAGER as saveFile
     if (Delegate::modified == true)
     {
         QString tmp_header = header_labels.join(';');
@@ -209,5 +235,8 @@ void Dialog::on_buttonBox_accepted()
 
 void Dialog::on_buttonBox_rejected()
 {
+    //CALL loadFile
+    //REMOVE THIS
     on_comboBox_currentTextChanged(ui->comboBox->currentText());
+    //
 }

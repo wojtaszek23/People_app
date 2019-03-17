@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     xmlreader.cpp \
     xmlwriter.cpp \
     dialogsave.cpp \
-    date.cpp
+    date.cpp \
+    manager.cpp
 
 HEADERS  += dialog.h \
     delegate.h \
     xmlreader.h \
     xmlwriter.h \
     dialogsave.h \
-    date.h
+    date.h \
+    manager.h
 
 FORMS    += dialog.ui \
     dialogsave.ui

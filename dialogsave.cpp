@@ -21,8 +21,10 @@ void DialogSave::on_buttonBox_rejected()
 
 void DialogSave::on_buttonBox_accepted()
 {
+    //MOVE TO MANAGER
     qDebug() <<"here";
     //dialog->show();
+
     Dialog::file_arleady_created = true;
     dialog->saveFile(ui->lineEdit->text()+".xml");
     dialog->addItemToCombo(ui->lineEdit->text()+".xml");
