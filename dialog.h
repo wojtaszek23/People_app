@@ -2,16 +2,15 @@
 #define DIALOG_H
 
 #include <QDialog>
-#include <QtCore>
-#include <QtGui>
-#include <QLineEdit>
 #include "delegate.h"
 #include "dialogsave.h"
+#include "modelmanager.h"
 
 namespace Ui {
 class Dialog;
-//class DialogSave;
 }
+
+class Delegate;
 
 class Dialog : public QDialog
 {
@@ -20,18 +19,10 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
-    //void setComboBoxText(QString text);
-    void saveFile(QString);
-    void addItemToCombo(QString);
-
-    //
-    static bool file_arleady_created;
-    //
+    void addFileName(QString);
 
 private slots:
-    void on_comboBox_currentTextChanged(const QString &arg1);
-
-    void on_pushButton_clicked();
+    void on_comboBox_activated(const QString &arg1);
 
     void on_pushButton_2_clicked();
 
@@ -41,10 +32,7 @@ private slots:
 
 private:
     Ui::Dialog *ui;
-    QStandardItemModel *model;
     Delegate *delegate;
-    QStringList header_labels;
-    QString currentFileName;
 };
 
 #endif // DIALOG_H

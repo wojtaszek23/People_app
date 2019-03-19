@@ -1,10 +1,21 @@
 #include "date.h"
-
 int Date::StringToInt(QString date)
 {
-    if( date[4]!='.' || date[7]!='.' || date.size() != 10 )
+    if( date[2] == '.' || date[5] == '.' || date.size() != 10 )
     {
-        return 0;
+        swap(date, 6, 0);
+        swap(date, 7, 1);
+        swap(date, 8, 2);
+        swap(date, 9, 3);
+        swap(date, 4, 5);
+        swap(date, 5, 9);
+        swap(date, 6, 9);
+        swap(date, 7, 8);
+        swap(date, 8, 9);
+    }
+    else if( date[4] != '.' || date[7] != '.' || date.size() != 10 )
+    {
+        return -1;
     }
     date = date.remove('.');
     return date.toInt();
@@ -58,4 +69,12 @@ int Date::countAge(QString date_s)
 QString Date::countStringAge(QString date)
 {
     return QString::number(countAge(date));
+}
+
+void Date::swap(QString &str, int pos1, int pos2)
+{
+    QChar tmp;
+    tmp = str[pos1];
+    str[pos1] = str[pos2];
+    str[pos2] = tmp;
 }

@@ -8,7 +8,6 @@ class Dialog;
 
 namespace Ui {
 class DialogSave;
-//class Dialog;
 }
 
 class DialogSave : public QDialog

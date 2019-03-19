@@ -15,6 +15,8 @@ public:
     static bool checkFormat(QString date_s);
     static int countAge(QString date_s);
     static QString countStringAge(QString date);
+private:
+    static void swap(QString &str, int pos1, int pos2);
 };
 
 #endif // DATE_H

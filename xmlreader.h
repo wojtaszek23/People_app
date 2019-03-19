@@ -1,22 +1,22 @@
 #ifndef XMLREADER_H
 #define XMLREADER_H
-#include "dialog.h"
+
+#include <QWidget>
+#include <QStandardItemModel>
+#include <QFile>
+#include <QtCore>
 
 class XmlReader
 {
 private:
-    static XmlReader *instance;
-    QFile file;
-    QStandardItemModel *model;
-    QStringList attr_names;
-
-    XmlReader();
-    bool store_to_model(QString root_name, QString node_name);
-    void parse_header(QString header);
+    static QFile file;
+    virtual void abstractMethod() = 0;
+    static bool store_to_model(QStandardItemModel *model, const QString &root_name,
+        const QString &node_name, const QStringList &header_labels);
 
 public:
-    static XmlReader* get();
-    QStandardItemModel* getModel(Dialog *dialog, QString file_name, QString root_name, QString node_name, QString header);
+    static QStandardItemModel* getModel(QWidget* dialog, const QString &file_name,
+        const QString &root_name, const QString &node_name, const QStringList &header_labels);
 
 };
 

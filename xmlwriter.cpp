@@ -1,73 +1,73 @@
 #include "xmlwriter.h"
 #include <QMessageBox>
 #include <QDebug>
+//#include <QString>
 
-XmlWriter* XmlWriter::instance = NULL;
 
-XmlWriter::XmlWriter()
-{
+QFile XmlWriter::file;
 
-}
-
-void XmlWriter::store_to_xml(QStandardItemModel *model)
+bool XmlWriter::store_to_xml(QStandardItemModel *model, const QString &root_name, const QString &node_name,
+    const QStringList &header_labels, const bool * const opt_tab)
 {
     QXmlStreamWriter xmlWriter(&file);
     xmlWriter.setAutoFormatting(true);
-qDebug() <<"hej";
     xmlWriter.writeStartDocument();
-    xmlWriter.writeStartElement("People");
-
-    /*QStringList header = ( QStringList() << model->horizontalHeaderItem(0)->text() <<
-    model->horizontalHeaderItem(1)->text() << model->horizontalHeaderItem(2)->text() <<
-    model->horizontalHeaderItem(3)->text() << model->horizontalHeaderItem(4)->text() <<
-    model->horizontalHeaderItem(5)->text() << model->horizontalHeaderItem(6)->text() <<
-    model->horizontalHeaderItem(7)->text() << model->horizontalHeaderItem(8)->text());
-*/
-    qDebug() << attr_names.at(5) <<"ho";
+    xmlWriter.writeStartElement(root_name);
+    QString error_list = "";
 
     for(int row = 0; row < model->rowCount(); row++)
     {
-        xmlWriter.writeStartElement("Person_"+QString::number(row+1));
+        xmlWriter.writeStartElement(node_name+QString::number(row+1));
         for(int col = 0; col < model->columnCount(); col++)
         {
-            QString value = model->item(row,col)->text();//data(index,Qt::EditRole).toString();
-            qDebug() << attr_names.at(col)<< value;
-            xmlWriter.writeTextElement(attr_names.at(col), value);
+            QModelIndex index = model->index(row,col,QModelIndex());
+            QString value = model->data(index,Qt::EditRole).toString();
+
+            if(value == "")
+            {
+                if ( opt_tab[col] == false )
+                    error_list += QString::number(row) + "," + QString::number(col) + "; ";
+            }
+
+            xmlWriter.writeTextElement(header_labels.at(col), value);
+
         }
-        xmlWriter.writeEndElement();
+            xmlWriter.writeEndElement();
     }
     xmlWriter.writeEndElement();
-    file.close();
-}
-
-void XmlWriter::parse_header(QString header)
-{
-    qDebug() <<header;
-    attr_names.clear();
-    attr_names = header.split(";");
-    for(int i=0;i<attr_names.size();i++)
+    if(error_list != "")
     {
-        qDebug() << attr_names.at(i);
+        QMessageBox errorMsg;
+        errorMsg.setText("The table is incorrect!");
+        errorMsg.setInformativeText("Following cells do not have data:\n"
+            + error_list + "\nDo You want to save the table anyway?");
+        errorMsg.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+        errorMsg.setDefaultButton(QMessageBox::Cancel);
+        errorMsg.setIcon(QMessageBox::Warning);
+        int result = errorMsg.exec();
+        if(result == 0x00400000)
+        {
+            file.remove();
+            return false;
+        }
     }
+    return true;
 }
 
-XmlWriter *XmlWriter::get()
+void XmlWriter::writeModel(const QString &file_name, QStandardItemModel *model, const QString &root_name,
+    const QString &node_name, const QStringList &header_labels, const bool * const opt_tab)
 {
-    if ( instance == NULL )
-    {
-        instance = new XmlWriter();
-    }
-    return instance;
-}
-
-void XmlWriter::writeModel(QString file_name, QStandardItemModel *model, QString header)
-{
-    parse_header(header);
-    file.setFileName(file_name);
+    file.setFileName(file_name+"_temporary_^r^_-_-_file");
     if(!file.open(QFile::WriteOnly | QFile::Text))
     {
         return;
     }
-    store_to_xml(model);
+    if ( store_to_xml(model, root_name, node_name, header_labels, opt_tab) == true )
+    {
+        if(QFile::exists(file_name))
+        {
+            QFile::remove(file_name);
+        }
+        file.rename(file_name);
+    }
 }
-

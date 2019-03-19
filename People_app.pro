@@ -19,7 +19,7 @@ SOURCES += main.cpp\
     xmlwriter.cpp \
     dialogsave.cpp \
     date.cpp \
-    manager.cpp
+    modelmanager.cpp
 
 HEADERS  += dialog.h \
     delegate.h \
@@ -27,7 +27,7 @@ HEADERS  += dialog.h \
     xmlwriter.h \
     dialogsave.h \
     date.h \
-    manager.h
+    modelmanager.h
 
 FORMS    += dialog.ui \
     dialogsave.ui
