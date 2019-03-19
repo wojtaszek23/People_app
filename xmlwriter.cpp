@@ -6,7 +6,7 @@
 
 QFile XmlWriter::file;
 
-bool XmlWriter::store_to_xml(QStandardItemModel *model, const QString &root_name, const QString &node_name,
+bool XmlWriter::store_to_xml(const QStandardItemModel * const model, const QString &root_name, const QString &node_name,
     const QStringList &header_labels, const bool * const opt_tab)
 {
     QXmlStreamWriter xmlWriter(&file);
@@ -17,6 +17,10 @@ bool XmlWriter::store_to_xml(QStandardItemModel *model, const QString &root_name
 
     for(int row = 0; row < model->rowCount(); row++)
     {
+        if (isEmptyRow(model, row) == true)
+        {
+            continue;
+        }
         xmlWriter.writeStartElement(node_name+QString::number(row+1));
         for(int col = 0; col < model->columnCount(); col++)
         {
@@ -54,13 +58,13 @@ bool XmlWriter::store_to_xml(QStandardItemModel *model, const QString &root_name
     return true;
 }
 
-void XmlWriter::writeModel(const QString &file_name, QStandardItemModel *model, const QString &root_name,
+bool XmlWriter::writeModel(const QString &file_name, const QStandardItemModel * const model, const QString &root_name,
     const QString &node_name, const QStringList &header_labels, const bool * const opt_tab)
 {
     file.setFileName(file_name+"_temporary_^r^_-_-_file");
     if(!file.open(QFile::WriteOnly | QFile::Text))
     {
-        return;
+        return false;
     }
     if ( store_to_xml(model, root_name, node_name, header_labels, opt_tab) == true )
     {
@@ -69,5 +73,26 @@ void XmlWriter::writeModel(const QString &file_name, QStandardItemModel *model, 
             QFile::remove(file_name);
         }
         file.rename(file_name);
+        return true;
     }
+    return false;
+}
+
+bool XmlWriter::isEmptyRow(const QStandardItemModel *const model, int row)
+{
+    if (model->rowCount() == 0)
+    {
+        return true;
+    }
+
+    for(int col = 0; col < model->columnCount(); col++)
+    {
+        QModelIndex index = model->index(row,col,QModelIndex());
+        QString value = model->data(index,Qt::DisplayRole).toString();
+        if (value != "")
+        {
+            return false;
+        }
+    }
+    return true;
 }

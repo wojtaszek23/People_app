@@ -11,11 +11,12 @@ class XmlWriter
 private:
     static QFile file;
     virtual void abstractMethod() = 0;
-    static bool store_to_xml(QStandardItemModel *model, const QString &root_name, const QString &node_name,
+    static bool store_to_xml(const QStandardItemModel * const model, const QString &root_name, const QString &node_name,
         const QStringList &header_labels, const bool * const opt_tab);
+    static bool isEmptyRow(const QStandardItemModel *const model, int row);
 
 public:
-    static void writeModel(const QString &file_name, QStandardItemModel *model, const QString &root_name,
+    static bool writeModel(const QString &file_name, const QStandardItemModel * const model, const QString &root_name,
         const QString &node_name, const QStringList &header_labels, const bool * const opt_tab);
 };
 

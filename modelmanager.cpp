@@ -1,6 +1,4 @@
 #include "modelmanager.h"
-//#include <QMessageBox>
-//#include <QDebug>
 
 ModelManager* ModelManager::instance = NULL;
 
@@ -94,9 +92,12 @@ bool ModelManager::loadFileOrder(const QString &file_name)
 bool ModelManager::saveFile(const QString &file_name)
 {
     removeEmptyRows();
-    XmlWriter::writeModel(file_name, model, root_name, node_name, header_labels2, opt_tab);
+    if (XmlWriter::writeModel(file_name, model, root_name, node_name, header_labels2, opt_tab) == false)
+    {
+        return false;
+    }
     modified = false;
-    if(model->rowCount() == 0)
+    if(isEmptyRow(model->rowCount()-1) == false) // The last one row isn't empty - should be empty for adding new record
     {
         model->appendRow(NULL);
     }
@@ -116,12 +117,12 @@ bool ModelManager::loadFile(const QString &file_name)
     }
     last_file_name = file_name;
 
-    if(model->rowCount() == 0)
+    if(isEmptyRow(model->rowCount()-1) == false) // The last one row isn't empty - should be empty for adding new record
     {
         model->appendRow(NULL);
     }
 
-    return 0;
+    return true;
 }
 
 bool ModelManager::deleteRecordsOrder(const QModelIndexList &selection)
@@ -145,6 +146,27 @@ bool ModelManager::deleteRecords(const QModelIndexList &selection)
     {
         model->appendRow(NULL);
     }
+    return true;
+}
+
+bool ModelManager::isEmptyRow(int row)
+{
+    if (model->rowCount() == 0)
+    {
+        return true;
+    }
+
+    for(int col = 0; col < model->columnCount(); col++)
+    {
+        QModelIndex index = model->index(row,col,QModelIndex());
+        QString value = model->data(index,Qt::EditRole).toString();
+
+        if (value != "")
+        {
+            return false;
+        }
+    }
+
     return true;
 }
 

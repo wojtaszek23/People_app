@@ -38,6 +38,7 @@ public:
     bool deleteRecords(const QModelIndexList &selection);
     void removeEmptyRows();
     void removeNotFullRows();
+    bool isEmptyRow(int row = 0);
 };
 
 #endif // MODEL_MANAGER_H

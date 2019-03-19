@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<People>
+    <Person1>
+        <FirstName>Bogdan</FirstName>
+        <LastName>Borysiewicz</LastName>
+        <StreetName>Szczepidło</StreetName>
+        <HouseNumber>26</HouseNumber>
+        <ApartmentNumber></ApartmentNumber>
+        <PostalCode>62-513</PostalCode>
+        <PhoneNumber>509242351</PhoneNumber>
+        <DayOfBirth>05.10.1991</DayOfBirth>
+        <Age>27</Age>
+    </Person1>
+    <Person2>
+        <FirstName>Andrzej</FirstName>
+        <LastName>Nowak</LastName>
+        <StreetName>Warszawska</StreetName>
+        <HouseNumber>801</HouseNumber>
+        <ApartmentNumber>23</ApartmentNumber>
+        <PostalCode>01-222</PostalCode>
+        <PhoneNumber>888465123</PhoneNumber>
+        <DayOfBirth>27.02.1995</DayOfBirth>
+        <Age>18</Age>
+    </Person2>
+    <Person3>
+        <FirstName>Krystyna</FirstName>
+        <LastName>Bogacka</LastName>
+        <StreetName>Kolista</StreetName>
+        <HouseNumber>21</HouseNumber>
+        <ApartmentNumber></ApartmentNumber>
+        <PostalCode>20-88</PostalCode>
+        <PhoneNumber>600500400</PhoneNumber>
+        <DayOfBirth>17.05.1985</DayOfBirth>
+        <Age>33</Age>
+    </Person3>
+</People>

@@ -1,5 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include <QMessageBox>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -72,7 +73,14 @@ void Dialog::on_buttonBox_accepted()
     }
     else
     {
-        ModelManager::get()->saveFileOrder(ui->comboBox->currentText());
+        if ( ModelManager::get()->saveFileOrder(ui->comboBox->currentText()))
+        {
+            QMessageBox::information(this, "Information", "Current data were saved succesfully");
+        }
+        else
+        {
+            QMessageBox::information(this, "Information", "Data were not saved");
+        }
     }
 }
 
