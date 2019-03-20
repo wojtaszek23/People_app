@@ -13,13 +13,13 @@ QWidget *Delegate::createEditor(QWidget *parent, const QStyleOptionViewItem &opt
         return NULL;
     }
     QTextEdit *editor = new QTextEdit (parent);
+    editor->installEventFilter(const_cast<Delegate*>(this));
     return editor;
 }
 
 void Delegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     QString value = index.model()->data(index,Qt::EditRole).toString();
-    value.remove('\n');
     QTextEdit *textedit = static_cast <QTextEdit*>(editor);
     textedit->setText(value);
 }
@@ -28,7 +28,6 @@ void Delegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QM
 {
     QTextEdit *textedit = static_cast <QTextEdit*>(editor);
     QString value = textedit->toPlainText();
-    value.remove('\n');
     if(index.column() == 7)
     {
         QString date = Date::countStringAge(value);
@@ -65,4 +64,20 @@ void Delegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QM
             model->insertRow(model->rowCount());
         }
     }
+}
+
+bool Delegate::eventFilter(QObject *object, QEvent *event)
+{
+    QWidget* editor = qobject_cast<QWidget*>(object);
+    if (editor && event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+        if (key_event->key() == Qt::Key_Return || key_event->key() == Qt::Key_Tab)
+        {
+            emit commitData(editor); //save changes
+            emit closeEditor(editor);
+            return true;
+        }
+    }
+    return false;
 }

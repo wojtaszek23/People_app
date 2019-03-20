@@ -8,6 +8,14 @@
 #include "modelmanager.h"
 #include "date.h"
 
+
+
+//
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QDebug>
+//
+
 class Delegate : public QItemDelegate
 {
 public:
@@ -15,6 +23,8 @@ public:
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    bool eventFilter(QObject* object, QEvent* event);
+
 
 /*signals:
 public slots:*/

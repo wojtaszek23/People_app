@@ -1,10 +1,14 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 #include <QMessageBox>
+#include <QKeyEvent>
+//#include <QCloseEvent>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Dialog)
+    ui(new Ui::Dialog),
+    key_ctrl_hold(false),
+    key_alt_hold(false)
 {
     ui->setupUi(this);
 
@@ -56,10 +60,6 @@ void Dialog::on_comboBox_activated(const QString &arg1)
 
 void Dialog::on_pushButton_2_clicked()
 {
-    if(ModelManager::get()->model->rowCount() == 1)
-    {
-        return;
-    }
     QModelIndexList selection = ui->tableView->selectionModel()->selectedRows();
     ModelManager::get()->deleteRecordsOrder(selection);
 }
@@ -88,4 +88,66 @@ void Dialog::on_buttonBox_rejected()
 {
     ModelManager::get()->loadFileOrder(ui->comboBox->currentText());
     ui->tableView->setModel(ModelManager::get()->model);
+}
+
+void Dialog::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Delete)
+    {
+        QModelIndexList selectedRows = ui->tableView->selectionModel()->selectedRows();
+        bool result = ModelManager::get()->deleteRecordsOrder(selectedRows);
+        if (result == false)
+        {
+            ModelManager::get()->clearSelected(ui->tableView->selectionModel()->selection());
+        }
+        return;
+    }
+
+    if(event->key() == Qt::Key_Control)
+    {
+        key_ctrl_hold = true;
+    }
+    if(event->key() == Qt::Key_Alt)
+    {
+        key_alt_hold = true;
+    }
+
+    if ( key_ctrl_hold && key_alt_hold )
+    {
+        ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    }
+}
+
+void Dialog::keyReleaseEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Control)
+    {
+        key_ctrl_hold = false;
+        ui->tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+    }
+    if(event->key() == Qt::Key_Alt)
+    {
+        key_alt_hold = false;
+        ui->tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+    }
+}
+
+
+void Dialog::closeEvent(QCloseEvent *event)
+{
+    if(ModelManager::get()->modified == true)
+    {
+        QMessageBox::StandardButton resBtn = QMessageBox::question(this,
+            "Quit", "Are You sure You want to quit? Not saved data will not be stored",
+            QMessageBox::Cancel | QMessageBox::Close);
+
+        if(resBtn == QMessageBox::Close)
+        {
+            event->accept();
+        }
+        else
+        {
+            event->ignore();
+        }
+    }
 }

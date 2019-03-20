@@ -1,4 +1,6 @@
 #include "modelmanager.h"
+#include <QModelIndexList>
+#include <QtAlgorithms>
 
 ModelManager* ModelManager::instance = NULL;
 
@@ -94,6 +96,10 @@ bool ModelManager::saveFile(const QString &file_name)
     removeEmptyRows();
     if (XmlWriter::writeModel(file_name, model, root_name, node_name, header_labels2, opt_tab) == false)
     {
+        if(isEmptyRow(model->rowCount()-1) == false) // The last one row isn't empty - should be empty for adding new record
+        {
+            model->appendRow(NULL);
+        }
         return false;
     }
     modified = false;
@@ -125,7 +131,7 @@ bool ModelManager::loadFile(const QString &file_name)
     return true;
 }
 
-bool ModelManager::deleteRecordsOrder(const QModelIndexList &selection)
+bool ModelManager::deleteRecordsOrder(QModelIndexList &selection)
 {
     if(selection.size() == 0)
     {
@@ -137,23 +143,37 @@ bool ModelManager::deleteRecordsOrder(const QModelIndexList &selection)
     }
 }
 
-bool ModelManager::deleteRecords(const QModelIndexList &selection)
+bool ModelManager::deleteRecords(QModelIndexList &selection)
 {
-    QModelIndex index = selection.at(0);
-    model->removeRows(index.row(),selection.count(), QModelIndex());
+    qSort(selection.begin(), selection.end(), qGreater<QModelIndex>());
+
+    foreach (QModelIndex index, selection) {
+        model->removeRow(index.row(),QModelIndex());
+    }
     modified = true;
-    if(model->rowCount() == 0)
+    if(isEmptyRow (model->rowCount()-1) == false )
     {
         model->appendRow(NULL);
     }
     return true;
 }
 
+void ModelManager::clearSelected(QItemSelection selection)
+{
+    QModelIndexList index_list = selection.indexes(); //ui->tableView->selectedIndexes;
+    for(int i = 0; i < index_list.size(); i++)
+    {
+        QModelIndex index = index_list.at(i);
+        ModelManager::get()->model->setData(index, "", Qt::EditRole);
+        modified = true;
+    }
+}
+
 bool ModelManager::isEmptyRow(int row)
 {
     if (model->rowCount() == 0)
     {
-        return true;
+        return false; // isn't empty, cause doesn't exist
     }
 
     for(int col = 0; col < model->columnCount(); col++)
@@ -188,28 +208,7 @@ void ModelManager::removeEmptyRows()
         if (empty_row == true)
         {
             model->removeRow(i, QModelIndex());
-        }
-    }
-}
-
-void ModelManager::removeNotFullRows()
-{
-    for(int i = 0; i < model->rowCount(); i++)
-    {
-        bool full_row = true;
-        for(int j = 0; j < model->columnCount(); j++)
-        {
-            QModelIndex index = model->index(i,j,QModelIndex());
-            QString value = model->data(index,Qt::EditRole).toString();
-            if (value == "" && opt_tab[j] != true)
-            {
-                full_row = false;
-                j = model->columnCount();
-            }
-        }
-        if (full_row == false)
-        {
-            model->removeRow(i, QModelIndex());
+            i--;
         }
     }
 }

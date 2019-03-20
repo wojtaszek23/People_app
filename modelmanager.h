@@ -34,8 +34,9 @@ public:
     bool loadFileOrder(const QString &file_name);
     bool saveFile(const QString &file_name);
     bool loadFile(const QString &file_name);
-    bool deleteRecordsOrder(const QModelIndexList &selection);
-    bool deleteRecords(const QModelIndexList &selection);
+    bool deleteRecordsOrder(QModelIndexList &selection);
+    bool deleteRecords(QModelIndexList &selection);
+    void clearSelected(QItemSelection selection);
     void removeEmptyRows();
     void removeNotFullRows();
     bool isEmptyRow(int row = 0);

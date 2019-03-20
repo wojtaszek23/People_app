@@ -5,7 +5,7 @@ Application was written in C++ in QT framework (QtCreator ver. 3.5.1, Qt ver. 5.
 Description:
 This application allows user to manage data of people in GUI view. At initial settings (which can be change by editing 'model-skeleton.ini') application allows to manage the following types of data:
 First Name, Last Name, Street Name, House Number, Apartment Number (optional), Postal Code, Phone Number, Day Of Birth, Age (read-only).
-The file 'model-skeleton.ini' should be located in the same directory as compiled application executing file. IF not, application will not work properly. 
+The file 'model-skeleton.ini' should be located in the same directory as compiled application executing file. IF not, application will not work properly.
 
 Application possibilities:
 - Editing, adding and deleting data in table view by clicking on table cells.
@@ -13,6 +13,16 @@ Application possibilities:
 - Save current changes by "Save" button.
 - Load last version of data stored in XML file by "Cancel" button.
 - Delete unwanted records by selecting all cells of chosen records and pushing "Delete Records" button.
+
+Hot Keys (while cell/cells is/are selected on table view):
+- [Del] - clear selected rows (all cells in row have to be selected), otherwise, if any all cells in row selected, remove selected single cells.
+- [Ctrl + Alt + press left mouse button on cell] - select all cells in row of chosen cell (by mouse clicking).
+- [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
+(and implemented by default):
+- [Ctrl + 'A'] - select all cells in table view.
+- [Ctrl + press left mouse button on cell] - add cell to selected cells list.
+- [Shift + 'Up'/'Right'/'Down'/'Left'] - add to selected adjacent cell on up/right/down/left from previously selected.
+- [Tab] - move selection on next cell from previously selected. 
 
 Application code description:
 main.cpp creates main window (Dialog class), which constructor calls own and other objects initialization. Next main window is showed. 

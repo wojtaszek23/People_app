@@ -33,6 +33,11 @@ private slots:
 private:
     Ui::Dialog *ui;
     Delegate *delegate;
+    bool key_ctrl_hold;
+    bool key_alt_hold;
+    void keyPressEvent (QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // DIALOG_H
