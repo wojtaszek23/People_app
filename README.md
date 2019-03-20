@@ -1,4 +1,5 @@
 # people_app
+![image](https://github.com/wojtaszek23/People_app/blob/master/screen_shot_people_app.png)
 Framework/System info:
 Application was written in C++ in QT framework (QtCreator ver. 3.5.1, Qt ver. 5.5.1) under Ubuntu 16.04v. system.
 

@@ -2,7 +2,6 @@
 #include "ui_dialog.h"
 #include <QMessageBox>
 #include <QKeyEvent>
-//#include <QCloseEvent>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -11,6 +10,8 @@ Dialog::Dialog(QWidget *parent) :
     key_alt_hold(false)
 {
     ui->setupUi(this);
+
+    setWindowTitle("People Application");
 
     delegate = new Delegate(this);
 
