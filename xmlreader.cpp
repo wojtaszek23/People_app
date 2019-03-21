@@ -1,6 +1,5 @@
 #include "xmlreader.h"
 #include <QMessageBox>
-#include <QDebug>
 
 
 QFile XmlReader::file;

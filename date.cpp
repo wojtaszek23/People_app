@@ -1,4 +1,6 @@
 #include "date.h"
+
+
 int Date::StringToInt(QString date)
 {
     if( date[2] == '.' || date[5] == '.' || date.size() != 10 )

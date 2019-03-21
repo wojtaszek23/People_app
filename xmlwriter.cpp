@@ -1,7 +1,5 @@
 #include "xmlwriter.h"
 #include <QMessageBox>
-#include <QDebug>
-//#include <QString>
 
 
 QFile XmlWriter::file;

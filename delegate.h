@@ -5,16 +5,10 @@
 #include <QItemDelegate>
 #include <QObject>
 #include <QTextEdit>
+#include <QKeyEvent>
 #include "modelmanager.h"
 #include "date.h"
 
-
-
-//
-#include <QKeyEvent>
-#include <QLineEdit>
-#include <QDebug>
-//
 
 class Delegate : public QItemDelegate
 {
