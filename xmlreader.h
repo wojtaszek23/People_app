@@ -16,7 +16,7 @@ private:
 
 public:
     static QStandardItemModel* getModel(QWidget* dialog, const QString &file_name,
-        const QString &root_name, const QString &node_name, const QStringList &header_labels);
+        const QString &root_name, const QString &node_name, const QStringList &header_labels, const QStringList &header_labels2);
 
 };
 

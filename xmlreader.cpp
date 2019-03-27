@@ -58,10 +58,11 @@ bool XmlReader::store_to_model(QStandardItemModel *model, const QString &root_na
 }
 
 QStandardItemModel *XmlReader::getModel(QWidget *widget, const QString &file_name,
-    const QString &root_name, const QString &node_name, const QStringList &header_labels)
+    const QString &root_name, const QString &node_name, const QStringList &header_labels, const QStringList &header_labels2)
 {
     QStandardItemModel *model = new QStandardItemModel(0,header_labels.size(),widget);
     model->setHorizontalHeaderLabels(header_labels);
+
     file.setFileName(file_name);
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -69,7 +70,7 @@ QStandardItemModel *XmlReader::getModel(QWidget *widget, const QString &file_nam
         QMessageBox::warning(widget, "Error", file_name + QString(" - could not open file."));
         return NULL;
     }
-    if(!store_to_model(model, root_name, node_name,header_labels))
+    if(!store_to_model(model, root_name, node_name,header_labels2))
     {
         delete model;
         QMessageBox::warning(widget, "Error", file_name + QString(" - incorrect structure of file."));

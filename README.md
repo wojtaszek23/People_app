@@ -7,7 +7,9 @@ This application allows user to manage data of people in GUI view. At initial se
 First Name, Last Name, Street Name, House Number, Apartment Number (optional), Postal Code, Phone Number, Day Of Birth, Age (read-only).
 The file 'model-skeleton.ini' should be located in the same directory as compiled application executing file. IF not, application will not work properly.
 
+
 ![image](https://github.com/wojtaszek23/People_app/blob/master/screen_shot_people_app.png)
+
 
 Application possibilities:
 - Editing, adding and deleting data in table view by clicking on table cells.
@@ -20,7 +22,9 @@ Hot Keys (while cell/cells is/are selected on table view):
 - [Del] - clear selected rows (all cells in row have to be selected), otherwise, if any all cells in row selected, remove selected single cells.
 - [Ctrl + Alt + press left mouse button on cell] - select all cells in row of chosen cell (by mouse clicking).
 - [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
-(and implemented by default):
+- [Ctrl + 'C'] - Set a copy of selected cells.
+- [Ctrl + 'V'] - Paste copied cells to another area of cells, starting from first selected.
+--and implemented by default:
 - [Ctrl + 'A'] - select all cells in table view.
 - [Ctrl + press left mouse button on cell] - add cell to selected cells list.
 - [Shift + 'Up'/'Right'/'Down'/'Left'] - add to selected adjacent cell on up/right/down/left from previously selected.

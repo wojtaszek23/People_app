@@ -61,8 +61,7 @@ void Dialog::on_comboBox_activated(const QString &arg1)
 
 void Dialog::on_pushButton_2_clicked()
 {
-    QModelIndexList selection = ui->tableView->selectionModel()->selectedRows();
-    ModelManager::get()->deleteRecordsOrder(selection);
+    ModelManager::get()->clearSelected(ui->tableView->selectionModel()->selection());
 }
 
 void Dialog::on_buttonBox_accepted()
@@ -95,12 +94,7 @@ void Dialog::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Delete)
     {
-        QModelIndexList selectedRows = ui->tableView->selectionModel()->selectedRows();
-        bool result = ModelManager::get()->deleteRecordsOrder(selectedRows);
-        if (result == false)
-        {
-            ModelManager::get()->clearSelected(ui->tableView->selectionModel()->selection());
-        }
+        ModelManager::get()->clearSelected(ui->tableView->selectionModel()->selection());
         return;
     }
 
@@ -111,6 +105,19 @@ void Dialog::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Alt)
     {
         key_alt_hold = true;
+    }
+
+    if( key_ctrl_hold && event->key() == Qt::Key_C)
+    {
+        ModelManager::get()->copySelected(ui->tableView->selectionModel()->selection());
+        ui->tableView->setModel(ModelManager::get()->model);
+        return;
+    }
+    else if ( key_ctrl_hold && event->key() == Qt::Key_V )
+    {
+        ModelManager::get()->pasteSelected(ui->tableView->selectionModel()->selection());
+        ui->tableView->setModel(ModelManager::get()->model);
+        return;
     }
 
     if ( key_ctrl_hold && key_alt_hold )

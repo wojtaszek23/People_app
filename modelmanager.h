@@ -24,6 +24,7 @@ private:
     QStringList header_labels2;
     bool *opt_tab;
     static QWidget* widget;
+    QModelIndexList copied_indexes;
 public:
     QStandardItemModel *model;
     static bool modified;
@@ -34,12 +35,13 @@ public:
     bool loadFileOrder(const QString &file_name);
     bool saveFile(const QString &file_name);
     bool loadFile(const QString &file_name);
-    bool deleteRecordsOrder(QModelIndexList &selection);
     bool deleteRecords(QModelIndexList &selection);
     void clearSelected(QItemSelection selection);
     void removeEmptyRows();
     void removeNotFullRows();
     bool isEmptyRow(int row = 0);
+    void copySelected(QItemSelection selection);
+    void pasteSelected(QItemSelection selection);
 };
 
 #endif // MODEL_MANAGER_H
