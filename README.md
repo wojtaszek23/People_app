@@ -2,7 +2,7 @@
 Framework/System info:
 Application was written in C++ in QT framework (QtCreator ver. 3.5.1, Qt ver. 5.5.1) under Ubuntu 16.04v. system.
 
-Description:
+<strong><em>Description:</></>
 This application allows user to manage data of people in GUI view. At initial settings (which can be change by editing 'model-skeleton.ini') application allows to manage the following types of data:
 First Name, Last Name, Street Name, House Number, Apartment Number (optional), Postal Code, Phone Number, Day Of Birth, Age (read-only).
 The file 'model-skeleton.ini' should be located in the same directory as compiled application executing file. IF not, application will not work properly.
@@ -11,26 +11,26 @@ The file 'model-skeleton.ini' should be located in the same directory as compile
 ![image](https://github.com/wojtaszek23/People_app/blob/master/screen_shot_people_app.png)
 
 
-Application possibilities:
+<strong><em>Application possibilities:</></>
 - Editing, adding and deleting data in table view by clicking on table cells.
 - Change data bases by choose the one from list contained in combo-box.
 - Save current changes by "Save" button.
 - Load last version of data stored in XML file by "Cancel" button.
 - Delete unwanted records by selecting all cells of chosen records and pushing "Delete Records" button.
 
-Hot Keys (while cell/cells is/are selected on table view):
+<strong><em>Hot Keys (while cell/cells is/are selected on table view):</></>
 - [Del] - clear selected rows (all cells in row have to be selected), otherwise, if any all cells in row selected, remove selected single cells.
 - [Ctrl + Alt + press left mouse button on cell] - select all cells in row of chosen cell (by mouse clicking).
 - [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
 - [Ctrl + 'C'] - Set a copy of selected cells.
 - [Ctrl + 'V'] - Paste copied cells to another area of cells, starting from first selected.
-</br></br>And implemented by default:
+</br><em>And implemented by default:</em>
 - [Ctrl + 'A'] - select all cells in table view.
 - [Ctrl + press left mouse button on cell] - add cell to selected cells list.
 - [Shift + 'Up'/'Right'/'Down'/'Left'] - add to selected adjacent cell on up/right/down/left from previously selected.
 - [Tab] - move selection on next cell from previously selected. 
 
-Application code description:
+<strong><em>Application code description:</></>
 main.cpp creates main window (Dialog class), which constructor calls own and other objects initialization. Next main window is showed. 
 
 Dialog - contains all GUI objects (beyond same Message Box dynamicly created while app running). There is possible to view and edit these GUI object in dialog.ui file. Dialog also contains implementation of signal function, which react on user activities on widgets. Dialog posts execution of user orders to Model Manager.
