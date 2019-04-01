@@ -27,7 +27,7 @@ The file 'model-skeleton.ini' should be located in the same directory as compile
 - [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
 - [Ctrl + 'C'] - Set a copy of selected cells.
 - [Ctrl + 'V'] - Paste copied cells to another area of cells, starting from first selected.
-</br></br><b>And implemented by default:</b>
+</br><b>And implemented by default:</b>
 - [Ctrl + 'A'] - select all cells in table view.
 - [Ctrl + press left mouse button on cell] - add cell to selected cells list.
 - [Shift + 'Up'/'Right'/'Down'/'Left'] - add to selected adjacent cell on up/right/down/left from previously selected.
