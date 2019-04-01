@@ -24,7 +24,7 @@ Hot Keys (while cell/cells is/are selected on table view):
 - [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
 - [Ctrl + 'C'] - Set a copy of selected cells.
 - [Ctrl + 'V'] - Paste copied cells to another area of cells, starting from first selected.
-       --And implemented by default:
+- And implemented by default:
 - [Ctrl + 'A'] - select all cells in table view.
 - [Ctrl + press left mouse button on cell] - add cell to selected cells list.
 - [Shift + 'Up'/'Right'/'Down'/'Left'] - add to selected adjacent cell on up/right/down/left from previously selected.
