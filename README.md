@@ -12,14 +12,16 @@ The file 'model-skeleton.ini' should be located in the same directory as compile
 ![image](https://github.com/wojtaszek23/People_app/blob/master/screen_shot_people_app.png)
 
 
-<strong><em>Application possibilities:</></>
+<b>Application possibilities:</b>
+---------------------------------
 - Editing, adding and deleting data in table view by clicking on table cells.
 - Change data bases by choose the one from list contained in combo-box.
 - Save current changes by "Save" button.
 - Load last version of data stored in XML file by "Cancel" button.
 - Delete unwanted records by selecting all cells of chosen records and pushing "Delete Records" button.
 
-<strong><em>Hot Keys (while cell/cells is/are selected on table view):</></>
+<b>Hot Keys (while cell/cells is/are selected on table view):</b>
+_________________________________________________________________
 - [Del] - clear selected rows (all cells in row have to be selected), otherwise, if any all cells in row selected, remove selected single cells.
 - [Ctrl + Alt + press left mouse button on cell] - select all cells in row of chosen cell (by mouse clicking).
 - [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
