@@ -2,7 +2,7 @@
 Framework/System info:
 Application was written in C++ in QT framework (QtCreator ver. 3.5.1, Qt ver. 5.5.1) under Ubuntu 16.04v. system.
 
-<strong><em>Description:</></>
+<strong><underline>Description:</underline></strong>
 This application allows user to manage data of people in GUI view. At initial settings (which can be change by editing 'model-skeleton.ini') application allows to manage the following types of data:
 First Name, Last Name, Street Name, House Number, Apartment Number (optional), Postal Code, Phone Number, Day Of Birth, Age (read-only).
 The file 'model-skeleton.ini' should be located in the same directory as compiled application executing file. IF not, application will not work properly.
