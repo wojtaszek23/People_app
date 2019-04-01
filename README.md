@@ -21,19 +21,20 @@ The file 'model-skeleton.ini' should be located in the same directory as compile
 - Delete unwanted records by selecting all cells of chosen records and pushing "Delete Records" button.
 
 <b>Hot Keys (while cell/cells is/are selected on table view):</b>
-_________________________________________________________________
+-----------------------------------------------------------------
 - [Del] - clear selected rows (all cells in row have to be selected), otherwise, if any all cells in row selected, remove selected single cells.
 - [Ctrl + Alt + press left mouse button on cell] - select all cells in row of chosen cell (by mouse clicking).
 - [Tab] / [Enter] - Finish edditing cell, when this is in edit mode.
 - [Ctrl + 'C'] - Set a copy of selected cells.
 - [Ctrl + 'V'] - Paste copied cells to another area of cells, starting from first selected.
-</br><em>And implemented by default:</em>
+</br></br><b>And implemented by default:</b>
 - [Ctrl + 'A'] - select all cells in table view.
 - [Ctrl + press left mouse button on cell] - add cell to selected cells list.
 - [Shift + 'Up'/'Right'/'Down'/'Left'] - add to selected adjacent cell on up/right/down/left from previously selected.
 - [Tab] - move selection on next cell from previously selected. 
 
-<strong><em>Application code description:</></>
+<b>Application code description:</b>
+------------------------------------
 main.cpp creates main window (Dialog class), which constructor calls own and other objects initialization. Next main window is showed. 
 
 Dialog - contains all GUI objects (beyond same Message Box dynamicly created while app running). There is possible to view and edit these GUI object in dialog.ui file. Dialog also contains implementation of signal function, which react on user activities on widgets. Dialog posts execution of user orders to Model Manager.
